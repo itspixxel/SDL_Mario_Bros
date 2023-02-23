@@ -84,7 +84,7 @@ bool InitSDL()
 			}
 
 			//Load the background texture
-			g_texture = LoadTextureFromFile("Assets/Mario.bmp");
+			g_texture = LoadTextureFromFile("Assets/Mario.png");
 			if (g_texture == nullptr)
 			{
 				return false;
