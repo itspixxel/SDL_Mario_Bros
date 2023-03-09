@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef _TEXTURE2D_H
-#define _TEXTURE2D_H
-
 #include <SDL.h>
 #include <string>
 #include "commons.h"
@@ -27,5 +24,3 @@ class Texture2D
 		int m_width;
 		int m_height;
 };
-
-#endif //_TEXTURE2D_H

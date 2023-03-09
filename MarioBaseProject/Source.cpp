@@ -125,12 +125,11 @@ void Render()
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(g_renderer);
 
-	//update the screen
-	SDL_RenderPresent(g_renderer);
-
 	// game screen manager render call
 	game_screen_manager->Render();
 
+	//update the screen
+	SDL_RenderPresent(g_renderer);
 }
 
 bool Update()
