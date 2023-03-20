@@ -1,4 +1,13 @@
 #pragma once
-//screen Dimensions
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 800
+#define MOVEMENTSPEED 250
+#define GRAVITYSTRENGTH 300
+
+#define JUMP_FORCE_DECREMENT 400
+#define INITIAL_JUMP_FORCE 600
+
+#define MAP_HEIGHT 13
+#define MAP_WIDTH 16
+#define SHAKE_DURATION 0.25
