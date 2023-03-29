@@ -1,7 +1,7 @@
 #pragma once
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 416
 #define MOVEMENTSPEED 250
 #define GRAVITYSTRENGTH 300
 
@@ -11,3 +11,8 @@
 #define MAP_HEIGHT 13
 #define MAP_WIDTH 16
 #define SHAKE_DURATION 0.25
+
+#define INJURED_TIME 2.5
+#define KOOPA_SPEED 96
+#define ANIMATION_DELAY 0.1
+

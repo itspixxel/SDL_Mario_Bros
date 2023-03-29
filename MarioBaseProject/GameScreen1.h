@@ -6,10 +6,13 @@
 #include "Commons.h"
 #include "CharacterMario.h"
 #include "CharacterLuigi.h"
+#include "CharacterKoopa.h"
+#include "CharacterCoin.h"
 #include "Collisions.h"
 #include "Character.h"
 #include "LevelMap.h"
 #include "PowBlock.h"
+#include <vector>
 
 class Texture2D;
 class Character;
@@ -37,13 +40,21 @@ private:
 	CharacterLuigi* luigi; 
 	LevelMap* m_level_map; 
 	PowBlock* m_pow_block;
-
+	std::vector<CharacterKoopa*> m_enemies;
+	std::vector<CharacterCoin*> m_coins; 
 	bool m_screenshake;
 	float m_shake_time;
 	float m_wobble;
 	float m_background_yPos;
+	float new_enemy_timer; 
+	int score; 
 
 	void DoScreenShake();
+	void UpdateEnemies(float deltaTime, SDL_Event e);
+	void CreateKoopa(Vector2D position, FACING direction, float speed);
+	void UpdateCoins(float deltaTime, SDL_Event e);
+	void CreateCoin(Vector2D position);
+
 
 	
 protected:

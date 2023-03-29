@@ -14,7 +14,7 @@ class Texture2D;
 class Character
 {
 public: 
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, FACING start_facing, float movement_speed);
 	~Character();
 
 	virtual void Render();
@@ -30,9 +30,13 @@ public:
 	bool IsJumping() { return m_jumping; }
 	void CancelJump() { m_jumping = false; }
 
+	bool GetAlive() { return m_alive; }
+	void SetAlive(bool isAlive) { m_alive = isAlive; }
+	
 
-private:
 	FACING m_facing_direction;
+	float m_movement_speed;
+private:
 	LevelMap* m_current_level_map;
 protected:
 	SDL_Renderer* m_renderer;
@@ -42,10 +46,12 @@ protected:
 
 	bool m_moving_left;
 	bool m_moving_right;
+	bool m_alive;
 
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
 	virtual void AddGravity(float deltaTime);
+	virtual void SetMovingAndJump(float deltaTime);
 
 	bool m_jumping;
 	bool m_can_jump;
