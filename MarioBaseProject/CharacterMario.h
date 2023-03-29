@@ -6,9 +6,9 @@
 
 class CharacterMario : public Character
 {
-public: 
-	CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, FACING start_facing, float movement_speed);
-	void Update(float deltaTime, SDL_Event e) override;
+	public: 
+		CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, FACING start_facing, float movement_speed);
+		void Update(float deltaTime, SDL_Event e) override;
 };
 
 #endif

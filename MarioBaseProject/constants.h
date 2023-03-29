@@ -15,4 +15,3 @@
 #define INJURED_TIME 2.5
 #define KOOPA_SPEED 96
 #define ANIMATION_DELAY 0.1
-
