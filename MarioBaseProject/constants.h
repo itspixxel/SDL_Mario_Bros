@@ -12,7 +12,7 @@
 #define INITIAL_JUMP_FORCE 600
 
 #define MAP_HEIGHT 13
-#define MAP_WIDTH 16
+#define MAP_WIDTH 32
 #define SHAKE_DURATION 0.25
 
 #define INJURED_TIME 2.5
