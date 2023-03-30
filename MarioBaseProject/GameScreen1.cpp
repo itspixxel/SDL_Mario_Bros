@@ -30,16 +30,16 @@ void GameScreen1::Render()
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Render();
+		m_enemies[i]->Render(camera);
 	}
 
 	for (int i = 0; i < m_coins.size(); i++)
 	{
-		m_coins[i]->Render();
+		m_coins[i]->Render(camera);
 	}
 
-	mario->Render();
-	luigi->Render();
+	mario->Render(camera);
+	luigi->Render(camera);
 	m_pow_block->Render();
 }
 
@@ -83,7 +83,12 @@ void GameScreen1::Update(float deltaTime, SDL_Event e)
 		//std::cout << "Box hit!" << std::endl;
 	}
 	
+	camera.x = SCREEN_WIDTH / 2.0f;
 
+	if (camera.x < 0)
+	{
+		camera.x = 0;
+	}
 }
 
 void GameScreen1::UpdatePowBlock()

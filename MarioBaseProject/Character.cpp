@@ -23,24 +23,24 @@ Character::~Character()
 	m_renderer = nullptr; 
 }
 
-void Character::Render()
+void Character::Render(SDL_Rect camera_rect)
 {
+	SDL_Rect sourceRect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
+	SDL_Rect drawRect = {static_cast<int>(m_position.x - camera_rect.x), static_cast<int>(m_position.y - camera_rect.y), m_texture->GetWidth(), m_texture->GetHeight() };
 	if (m_facing_direction == FACING_RIGHT)
 	{
-		m_texture->Render(m_position, SDL_FLIP_NONE);
+		//m_texture->Render(m_position, SDL_FLIP_NONE);
+		m_texture->Render(sourceRect, drawRect, SDL_FLIP_NONE);
 	}
 	else
 	{
-		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
+		//m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
+		m_texture->Render(sourceRect, drawRect, SDL_FLIP_HORIZONTAL);
 	}
-
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
-	
-	
-	
 }
 
 void Character::SetPosition(Vector2D new_position)

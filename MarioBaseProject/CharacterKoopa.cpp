@@ -65,7 +65,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 	
 }
 
-void CharacterKoopa::Render()
+void CharacterKoopa::Render(SDL_Rect camera_rect)
 {
 	//variable to hold the left position of the sprite we want to draw
 	int left = 0.0f;
