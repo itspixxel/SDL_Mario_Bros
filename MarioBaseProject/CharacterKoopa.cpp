@@ -65,7 +65,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 	
 }
 
-void CharacterKoopa::Render(SDL_Rect camera_rect)
+void CharacterKoopa::Render(SDL_Rect* camera_rect)
 {
 	//variable to hold the left position of the sprite we want to draw
 	int left = 0.0f;
@@ -80,7 +80,7 @@ void CharacterKoopa::Render(SDL_Rect camera_rect)
 	SDL_Rect portion_of_sprite = { left,0,m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
-	SDL_Rect destRect = { (int)(m_position.x), (int)(m_position.y), m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect destRect = { (int)(m_position.x - camera_rect->x), (int)(m_position.y - camera_rect->y), m_single_sprite_w, m_single_sprite_h };
 
 	//then draw it facing the correct direction
 	if (m_facing_direction == FACING_RIGHT)

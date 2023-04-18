@@ -37,7 +37,7 @@ class GameScreen1 : GameScreen
 		CharacterLuigi* luigi; 
 		LevelMap* m_level_map; 
 		PowBlock* m_pow_block;
-		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+		SDL_Rect* camera;
 		std::vector<CharacterKoopa*> m_enemies;
 		std::vector<CharacterCoin*> m_coins; 
 		bool m_screenshake;

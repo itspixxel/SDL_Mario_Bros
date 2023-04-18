@@ -23,10 +23,10 @@ Character::~Character()
 	m_renderer = nullptr; 
 }
 
-void Character::Render(SDL_Rect camera_rect)
+void Character::Render(SDL_Rect* camera_rect)
 {
 	SDL_Rect sourceRect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
-	SDL_Rect drawRect = { static_cast<int>(m_position.x - camera_rect.x), static_cast<int>(m_position.y - camera_rect.y), m_texture->GetWidth(), m_texture->GetHeight() };
+	SDL_Rect drawRect = { static_cast<int>(m_position.x - camera_rect->x), static_cast<int>(m_position.y - camera_rect->y), m_texture->GetWidth(), m_texture->GetHeight() };
 	
 
 	//m_texture->Render(sourceRect, drawRect, SDL_FLIP_NONE);

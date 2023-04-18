@@ -33,7 +33,7 @@ void CharacterCoin::Update(float deltaTime, SDL_Event e)
 
 }
 
-void CharacterCoin::Render(SDL_Rect camera_rect)
+void CharacterCoin::Render(SDL_Rect* camera_rect)
 {
 	SDL_Rect portion_of_sprite = { m_single_sprite_w * m_current_frame, 0,m_single_sprite_w, m_single_sprite_h };
 	SDL_Rect destRect = { (int)(m_position.x), (int)(m_position.y), m_single_sprite_w, m_single_sprite_h };

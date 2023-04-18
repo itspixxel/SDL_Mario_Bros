@@ -1,7 +1,9 @@
 #include "GameScreen1.h"
 #include <iostream>
 #include "Texture2D.h"
+#include <fstream>
 
+using namespace std;
 
 GameScreen1::GameScreen1(SDL_Renderer* renderer): GameScreen(renderer)
 {
@@ -20,7 +22,6 @@ GameScreen1::~GameScreen1()
 	m_pow_block = nullptr;
 
 	m_enemies.clear();
-
 }
 
 void GameScreen1::Render()
@@ -40,7 +41,7 @@ void GameScreen1::Render()
 
 	mario->Render(camera);
 	luigi->Render(camera);
-	m_pow_block->Render();
+	m_pow_block->Render(camera);
 }
 
 void GameScreen1::Update(float deltaTime, SDL_Event e)
@@ -83,15 +84,15 @@ void GameScreen1::Update(float deltaTime, SDL_Event e)
 		//std::cout << "Box hit!" << std::endl;
 	}
 	
-	camera.x = mario->GetPosition().x - (SCREEN_WIDTH / 2.0f);
+	camera->x = mario->GetPosition().x - (SCREEN_WIDTH / 2.0f);
 
-	if (camera.x < 0)
+	if (camera->x < 0)
 	{
-		camera.x = 0;
+		camera->x = 0;
 	}
-	if (camera.x > LEVEL_WIDTH - camera.w) 
+	if (camera->x > LEVEL_WIDTH - camera->w)
 	{
-		camera.x = LEVEL_WIDTH - camera.w;
+		camera->x = LEVEL_WIDTH - camera->w;
 	}
 }
 
@@ -113,6 +114,8 @@ void GameScreen1::UpdatePowBlock()
 bool GameScreen1::SetUpLevel()
 {
 	SetLevelMap();
+
+	camera = new SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	m_background_texture = new Texture2D(m_renderer);
 	if (!m_background_texture->LoadFromFile("Assets/background.png"))
@@ -141,20 +144,41 @@ bool GameScreen1::SetUpLevel()
 
 void GameScreen1::SetLevelMap()
 {
-	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
-										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-										{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
+	//int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
+	//									{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	//									{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
 
+	ifstream inFile;
+	inFile.open("Levels/Level1.txt");
+	
+	if (!inFile.good())
+	{
+		cerr << "Can't open text file " << endl;
+	}
+
+	int map[MAP_HEIGHT][MAP_WIDTH];
+	int tempNum;
+
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		for (int j = 0; i < MAP_WIDTH; i++)
+		{
+			inFile >> tempNum;
+			map[i][j] >> tempNum;
+		}
+	}
+
+	inFile.close();
 
 	//clear any old maps
 	if (m_level_map != nullptr)

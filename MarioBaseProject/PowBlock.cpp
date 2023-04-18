@@ -15,7 +15,7 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* map)
 	m_single_sprite_w = m_texture->GetWidth() / 3; //there are three images in this sprite sheet in a row
 	m_single_sprite_h = m_texture->GetHeight();
 	m_num_hits_left = 3;
-	m_position = Vector2D((SCREEN_WIDTH * 0.5f) - m_single_sprite_w * 0.5f, 260);
+	m_position = Vector2D((SCREEN_WIDTH * 0.5f) - m_single_sprite_w * 0.5f, 650);
 	/*sourceRect = Rect2D(m_position.x, m_position.y, m_texture->GetWidth() / 3, m_texture->GetHeight());*/
 }
 
@@ -26,7 +26,7 @@ PowBlock::~PowBlock()
 	m_level_map = nullptr; 
 }
 
-void PowBlock::Render()
+void PowBlock::Render(SDL_Rect* camera_rect)
 {
 	if (m_num_hits_left > 0)
 	{
@@ -38,7 +38,7 @@ void PowBlock::Render()
 
 		//determine where to draw it
 		SDL_Rect dest_rect = {
-	static_cast<int>(m_position.x), static_cast<int>(m_position.y), m_single_sprite_w, m_single_sprite_h
+	static_cast<int>(m_position.x - camera_rect->x), static_cast<int>(m_position.y - camera_rect->y), m_single_sprite_w, m_single_sprite_h
 		};
 
 		//draw the sprite
