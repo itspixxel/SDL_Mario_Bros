@@ -5,15 +5,15 @@
 
 class GameScreen
 {
-	public:
-		GameScreen(SDL_Renderer* renderer);
-		~GameScreen();
+public:
+	GameScreen(SDL_Renderer* renderer);
+	~GameScreen();
 
-		virtual void Render();
-		virtual void Update(float deltaTime, SDL_Event e);
-	private:
-	protected:
-		SDL_Renderer* m_renderer; 
+	virtual void Render();
+	virtual void Update(float deltaTime, SDL_Event e);
+private:
+protected:
+	SDL_Renderer* m_renderer; 
 };
 
 #endif

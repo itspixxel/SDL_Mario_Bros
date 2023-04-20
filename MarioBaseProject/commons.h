@@ -57,4 +57,5 @@ struct Rect2D
 		this->width = width;
 		this->height = height;
 	}
+
 };

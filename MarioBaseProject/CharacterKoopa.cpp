@@ -10,6 +10,8 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	m_single_sprite_w = m_texture->GetWidth() / 2;
 	m_single_sprite_h = m_texture->GetHeight();
 
+	m_source_rect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
+	m_draw_rect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
 }
 
 CharacterKoopa::~CharacterKoopa()
@@ -81,7 +83,7 @@ void CharacterKoopa::Render(SDL_Rect* camera_rect)
 
 	//determine where you want it drawn
 	SDL_Rect destRect = { (int)(m_position.x - camera_rect->x), (int)(m_position.y - camera_rect->y), m_single_sprite_w, m_single_sprite_h };
-
+	//SDL_Rect destRect = { (int)(camera_rect->x), (int)(camera_rect->y), m_single_sprite_w, m_single_sprite_h };
 	//then draw it facing the correct direction
 	if (m_facing_direction == FACING_RIGHT)
 	{

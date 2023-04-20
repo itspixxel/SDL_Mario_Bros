@@ -16,6 +16,10 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	}
 
 	m_current_level_map = map; 
+
+	m_source_rect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
+	m_draw_rect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
+
 }
 
 Character::~Character()
@@ -25,25 +29,24 @@ Character::~Character()
 
 void Character::Render(SDL_Rect* camera_rect)
 {
-	SDL_Rect sourceRect = { 0, 0, m_texture->GetWidth(), m_texture->GetHeight() };
-	SDL_Rect drawRect = { static_cast<int>(m_position.x - camera_rect->x), static_cast<int>(m_position.y - camera_rect->y), m_texture->GetWidth(), m_texture->GetHeight() };
-	
+	m_draw_rect = { (int)m_position.x - camera_rect->x, (int)m_position.y - camera_rect->y, m_texture->GetWidth(), m_texture->GetHeight() };
 
-	//m_texture->Render(sourceRect, drawRect, SDL_FLIP_NONE);
 	if (m_facing_direction == FACING_RIGHT)
 	{
-		//m_texture->Render(m_position, SDL_FLIP_NONE);
-		m_texture->Render(sourceRect, drawRect, SDL_FLIP_NONE);
+		m_texture->Render(m_source_rect, m_draw_rect, SDL_FLIP_NONE);
 	}
 	else
 	{
-		//m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
-		m_texture->Render(sourceRect, drawRect, SDL_FLIP_HORIZONTAL);
+		m_texture->Render(m_source_rect, m_draw_rect, SDL_FLIP_HORIZONTAL);
 	}
+
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
+	
+	
+	
 }
 
 void Character::SetPosition(Vector2D new_position)

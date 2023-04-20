@@ -1,9 +1,7 @@
 #include "GameScreen1.h"
 #include <iostream>
 #include "Texture2D.h"
-#include <fstream>
 
-using namespace std;
 
 GameScreen1::GameScreen1(SDL_Renderer* renderer): GameScreen(renderer)
 {
@@ -22,6 +20,7 @@ GameScreen1::~GameScreen1()
 	m_pow_block = nullptr;
 
 	m_enemies.clear();
+
 }
 
 void GameScreen1::Render()
@@ -42,6 +41,7 @@ void GameScreen1::Render()
 	mario->Render(camera);
 	luigi->Render(camera);
 	m_pow_block->Render(camera);
+	m_text->Render(10, 10);
 }
 
 void GameScreen1::Update(float deltaTime, SDL_Event e)
@@ -84,16 +84,18 @@ void GameScreen1::Update(float deltaTime, SDL_Event e)
 		//std::cout << "Box hit!" << std::endl;
 	}
 	
-	camera->x = mario->GetPosition().x - (SCREEN_WIDTH / 2.0f);
+	camera->x = mario->GetPosition().x - SCREEN_WIDTH / 2;
+	//camera -> x = 100; 
+	if (camera->x < 0) { camera->x = 0; }
+	else if (camera->x > LEVEL_WIDTH - camera->w) { camera->x = LEVEL_WIDTH - camera->w; }
 
-	if (camera->x < 0)
+	if (m_text != nullptr && score != old_score)
 	{
-		camera->x = 0;
+		old_score = score;
+		m_text->LoadFont("Fonts/Pacifico.ttf", 40, scoreMessage + std::to_string(score), { 255, 255, 255 });
 	}
-	if (camera->x > LEVEL_WIDTH - camera->w)
-	{
-		camera->x = LEVEL_WIDTH - camera->w;
-	}
+
+
 }
 
 void GameScreen1::UpdatePowBlock()
@@ -118,15 +120,15 @@ bool GameScreen1::SetUpLevel()
 	camera = new SDL_Rect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	m_background_texture = new Texture2D(m_renderer);
-	if (!m_background_texture->LoadFromFile("Assets/background.png"))
+	if (!m_background_texture->LoadFromFile("Images/BackgroundMB.png"))
 	{
 		std::cout << "Failed to load background texture!" << std::endl;
 		return false;
 	}
 
-	mario = new CharacterMario(m_renderer, "Assets/Mario.png", Vector2D(80, 100), m_level_map, FACING_RIGHT, MOVEMENTSPEED);
+	mario = new CharacterMario(m_renderer, "Images/Mario.png", Vector2D(80, 100), m_level_map, FACING_RIGHT, MOVEMENTSPEED);
 	luigi = new CharacterLuigi(m_renderer, "Images/Luigi.png", Vector2D(60, 100), m_level_map, FACING_LEFT, MOVEMENTSPEED);
-
+	
 	CreateKoopa(Vector2D(80, 100), FACING_RIGHT, KOOPA_SPEED);
 	CreateKoopa(Vector2D(100, 200), FACING_LEFT, KOOPA_SPEED);
 
@@ -139,28 +141,38 @@ bool GameScreen1::SetUpLevel()
 	m_background_yPos = 0.0f; 
 	new_enemy_timer = 5;
 	score = 0; 
+
+	m_text = new TextRenderer(m_renderer);
+
+	if (!m_text->LoadFont("Fonts/Pacifico.ttf", 40, scoreMessage + std::to_string(score), { 255, 255, 255 }))
+	{
+		std::cout << "Failed to load background texture!" << std::endl;
+		return false;
+	}
 	return false;
 }
 
 void GameScreen1::SetLevelMap()
 {
-	//int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
-	//									{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	//									{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
+	/*int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
+										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+										{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} };
+*/
 
 	ifstream inFile;
+
 	inFile.open("Levels/Level1.txt");
-	
+
 	if (!inFile.good())
 	{
 		cerr << "Can't open text file " << endl;
@@ -171,10 +183,10 @@ void GameScreen1::SetLevelMap()
 
 	for (int i = 0; i < MAP_HEIGHT; i++)
 	{
-		for (int j = 0; i < MAP_WIDTH; i++)
+		for (int j = 0; j < MAP_WIDTH; j++)
 		{
 			inFile >> tempNum;
-			map[i][j] >> tempNum;
+			map[i][j] = tempNum;
 		}
 	}
 

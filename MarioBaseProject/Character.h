@@ -9,11 +9,11 @@
 #include "Texture2D.h"
 #include "LevelMap.h"
 
-class Texture2D;
+class Texture2D; 
 
 class Character
 {
-public:
+public: 
 	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, FACING start_facing, float movement_speed);
 	~Character();
 
@@ -32,7 +32,7 @@ public:
 
 	bool GetAlive() { return m_alive; }
 	void SetAlive(bool isAlive) { m_alive = isAlive; }
-
+	
 
 	FACING m_facing_direction;
 	float m_movement_speed;
@@ -40,8 +40,11 @@ private:
 	LevelMap* m_current_level_map;
 protected:
 	SDL_Renderer* m_renderer;
-	Vector2D m_position;
-	Texture2D* m_texture;
+	Vector2D m_position; 
+	Texture2D* m_texture; 
+
+	SDL_Rect m_source_rect; 
+	SDL_Rect m_draw_rect; 
 	float m_collision_radius;
 
 	bool m_moving_left;
@@ -59,8 +62,6 @@ protected:
 
 	virtual void Jump();
 
-	SDL_Rect m_source_rect;
-	SDL_Rect m_draw_rect;
 };
 
 #endif

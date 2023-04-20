@@ -8,6 +8,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
+
 #include "GameScreenManager.h"
 
 using namespace std;
@@ -28,7 +30,7 @@ int main(int argc, char* args[])
 {
 	if (InitSDL())
 	{
-		LoadMusic("Music/Mario.mp3"); 
+		LoadMusic("Music/Mario.mp3");
 		if (Mix_PlayingMusic() == 0)
 		{
 			Mix_PlayMusic(g_music, -1);
@@ -137,7 +139,11 @@ bool InitSDL()
 			return false;
 		}
 
-
+		if (TTF_Init() == -1)
+		{
+			cout << "TTF could not init. Error: " << TTF_GetError();
+			return false;
+		}
 	}
 
 	return true; 
@@ -178,5 +184,6 @@ void CLoseSDL()
 
 	IMG_Quit();
 	SDL_Quit();
+	TTF_Quit();
 
 }

@@ -12,6 +12,7 @@
 #include "Character.h"
 #include "LevelMap.h"
 #include "PowBlock.h"
+#include "TextRenderer.h"
 #include <vector>
 
 class Texture2D;
@@ -20,40 +21,50 @@ class PowBlock;
 
 class GameScreen1 : GameScreen
 {
-	public:
-		GameScreen1(SDL_Renderer* renderer);
-		~GameScreen1();
-
-		void Render() override; 
-		void Update(float deltaTime, SDL_Event e) override;
-		void UpdatePowBlock();
-
-	private:
-		bool SetUpLevel();
-		void SetLevelMap();
-
-		Texture2D* m_background_texture;
-		CharacterMario* mario;
-		CharacterLuigi* luigi; 
-		LevelMap* m_level_map; 
-		PowBlock* m_pow_block;
-		SDL_Rect* camera;
-		std::vector<CharacterKoopa*> m_enemies;
-		std::vector<CharacterCoin*> m_coins; 
-		bool m_screenshake;
-		float m_shake_time;
-		float m_wobble;
-		float m_background_yPos;
-		float new_enemy_timer; 
-		int score; 
-
-		void DoScreenShake();
-		void UpdateEnemies(float deltaTime, SDL_Event e);
-		void CreateKoopa(Vector2D position, FACING direction, float speed);
-		void UpdateCoins(float deltaTime, SDL_Event e);
-		void CreateCoin(Vector2D position);
 	
-	protected:
+public: 
+	
+	
+	GameScreen1(SDL_Renderer* renderer);
+	~GameScreen1();
+
+	void Render() override; 
+	void Update(float deltaTime, SDL_Event e) override;
+	void UpdatePowBlock(); 
+
+private:
+	bool SetUpLevel();
+	void SetLevelMap();
+
+	Texture2D* m_background_texture;
+	SDL_Rect* camera;
+	CharacterMario* mario;
+	CharacterLuigi* luigi; 
+	LevelMap* m_level_map; 
+	PowBlock* m_pow_block;
+	std::vector<CharacterKoopa*> m_enemies;
+	std::vector<CharacterCoin*> m_coins; 
+	bool m_screenshake;
+	float m_shake_time;
+	float m_wobble;
+	float m_background_yPos;
+	float new_enemy_timer; 
+	
+	TextRenderer* m_text;
+	string scoreMessage;
+	int score; 
+	int old_score; 
+
+	void DoScreenShake();
+	void UpdateEnemies(float deltaTime, SDL_Event e);
+	void CreateKoopa(Vector2D position, FACING direction, float speed);
+	void UpdateCoins(float deltaTime, SDL_Event e);
+	void CreateCoin(Vector2D position);
+
+
+	
+protected:
+	
 
 };
 

@@ -9,7 +9,7 @@ using namespace std;
 
 Texture2D::Texture2D(SDL_Renderer* renderer)
 {
-	m_renderer = renderer;
+	m_renderer = renderer; 
 }
 
 Texture2D::~Texture2D()
@@ -62,7 +62,7 @@ void Texture2D::Free()
 void Texture2D::Render(Vector2D new_position, SDL_RendererFlip flip, double angle)
 {
 	SDL_Rect renderLocation = { new_position.x, new_position.y, m_width, m_height };
-	SDL_RenderCopyEx(m_renderer, m_texture, NULL, &renderLocation, 0, NULL, flip);
+	SDL_RenderCopyEx(m_renderer, m_texture, NULL, &renderLocation, angle, NULL, flip);
 
 }
 
@@ -71,19 +71,13 @@ void Texture2D::Render(SDL_Rect src_rect, SDL_Rect src_dest, SDL_RendererFlip fl
 	SDL_RenderCopyEx(m_renderer, m_texture, &src_rect, &src_dest, angle, NULL, flip);
 }
 
-void Texture2D::Render(Vector2D new_position, SDL_Rect clip, SDL_RendererFlip flip, double angle)
+void Texture2D::Render(Vector2D new_position, SDL_Rect* clip, SDL_RendererFlip flip, double angle)
 {
-	// create destination rect with the given position and size of texture
 	SDL_Rect render_location = { new_position.x, new_position.y, m_width, m_height };
-
-	// check if clip is valid by checking if w and h are not zero
-	if (clip.w != 0 && clip.h != 0)
-	{
-		// if valid, set the width and height of the render location to match the clip
-		render_location.w = clip.w;
-		render_location.h = clip.h;
+	if (clip != nullptr) {
+		render_location.w = clip->w;
+		render_location.y = clip->y; 
 	}
 
-	// render the texture with SDL_RenderCopyEx
-	SDL_RenderCopyEx(m_renderer, m_texture, &clip, &render_location, angle, nullptr, flip);
+	SDL_RenderCopyEx(m_renderer, m_texture, clip, &render_location, angle, NULL, flip);
 }
