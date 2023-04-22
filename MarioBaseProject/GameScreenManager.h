@@ -1,24 +1,28 @@
-#pragma once
-#ifndef _GAMESCREENMANAGER_H
-#define _GAMESCREENMANAGER_H
+﻿#pragma once
 
 #include <SDL.h>
-#include "Commons.h"
+
+#include "Common.h"
+#include "AudioManager.h"
+
 class GameScreen;
 
 class GameScreenManager
 {
-	public:
-		GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen);
-		~GameScreenManager();
+    SDL_Renderer* m_renderer;
+    AudioManager* m_audio_manager;
+    GameSession* m_session;
+    GameScreen* m_current_screen;
+    Screen m_next_screen;
+    bool m_screen_queued;
 
-		void Render();
-		void Update(float deltaTime, SDL_Event e);
+public:
+    GameScreenManager(SDL_Renderer* renderer, AudioManager* audio_manager, GameSession* session, Screen start_screen);
+    ~GameScreenManager();
 
-		void ChangeScreen(SCREENS new_screen);
+    void Render();
+    void Update(float deltaTime, SDL_Event e);
 
-	private:
-		SDL_Renderer* m_renderer;
-		GameScreen* m_current_screen;
+    void ChangeScreen(Screen new_screen);
+    void QueueScreen(Screen next_screen);
 };
-#endif

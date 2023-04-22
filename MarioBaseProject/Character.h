@@ -1,66 +1,72 @@
-#pragma once
-#ifndef CHARACTER_H
-#define CHARACTER_H
+﻿#pragma once
 
 #include <SDL.h>
-#include "Commons.h"
-#include <iostream>
-#include "constants.h"
-#include "Texture2D.h"
+#include <string>
+
+#include "AnimatedSprite.h"
+
+#ifndef _CHARACTER_H
+#define _CHARACTER_H
+
+#include "Common.h"
 #include "LevelMap.h"
 
 class Texture2D;
 
 class Character
 {
-public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, FACING start_facing, float movement_speed);
-	~Character();
-
-	virtual void Render(SDL_Rect* camera_rect);
-	virtual void Update(float deltaTime, SDL_Event e);
-	void SetPosition(Vector2D new_position);
-	Vector2D GetPosition();
-	float GetCollisionRadius();
-	Rect2D GetCollisionBox() {
-		return Rect2D(m_position.x, m_position.y,
-			m_texture->GetWidth(), m_texture->GetHeight());
-	}
-
-	bool IsJumping() { return m_jumping; }
-	void CancelJump() { m_jumping = false; }
-
-	bool GetAlive() { return m_alive; }
-	void SetAlive(bool isAlive) { m_alive = isAlive; }
-
-
-	FACING m_facing_direction;
-	float m_movement_speed;
-private:
-	LevelMap* m_current_level_map;
 protected:
-	SDL_Renderer* m_renderer;
-	Vector2D m_position;
-	Texture2D* m_texture;
-	float m_collision_radius;
+    SDL_Renderer* m_renderer;
+    Vector2D m_position;
+    AnimatedSprite* m_sprite;
+    LevelMap* m_current_level_map;
 
-	bool m_moving_left;
-	bool m_moving_right;
-	bool m_alive;
+    const float m_movement_speed;
+    const float m_jump_force;
+    const short m_max_jumps;
+    const float m_collision_radius;
+    
+    Facing m_facing_direction;
+    bool m_moving_left;
+    bool m_moving_right;
+    bool m_jump_ascending;
+    short m_remaining_jumps;
+    bool m_ceiling_headbutt;
+    
+    Vector2D m_velocity;
+    bool m_alive;
 
-	virtual void MoveLeft(float deltaTime);
-	virtual void MoveRight(float deltaTime);
-	virtual void AddGravity(float deltaTime);
-	virtual void SetMovingAndJump(float deltaTime);
+    virtual void Jump();
+    virtual void MoveLeft(float deltaTime);
+    virtual void MoveRight(float deltaTime);
+    
+    void ApplyResistance(float deltaTime);
+    bool CanJump();
 
-	bool m_jumping;
-	bool m_can_jump;
-	float m_jump_force;
+public:
+    Character(SDL_Renderer* renderer, std::string image_path, int width, int height, Vector2D start_position, float movement_speed, float jump_force, short max_jumps, float collision_radius, LevelMap* map);
+    virtual ~Character();
 
-	virtual void Jump();
+    virtual void Render();
+    virtual void Update(float deltaTime, SDL_Event e);
 
-	SDL_Rect m_source_rect;
-	SDL_Rect m_draw_rect;
+    virtual void HandleInput(float deltaTime, SDL_Event e);
+    void UpdateMovement(float deltaTime);
+    void UpdateSprite(float deltaTime);
+
+    void SetPosition(Vector2D new_position);
+    Vector2D GetPosition();
+
+    float GetCollisionRadius();
+    virtual Rect2D GetCollisionBox();
+
+    bool IsJumping();
+    void CancelJump(bool force = false);
+
+    bool IsHeadbuttingCeiling() const { return m_ceiling_headbutt; }
+
+    bool IsAlive() { return m_alive; }
+    void SetAlive(bool alive) { m_alive = alive; }
 };
 
 #endif

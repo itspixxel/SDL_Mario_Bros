@@ -1,25 +1,22 @@
 #pragma once
-#ifndef COLLISIONS_H
-#define COLLISIONS_H
-#include "Commons.h"
 
-class Character; 
+#include "Common.h"
+
+class Character;
 
 class Collisions
 {
-	public: 
-		~Collisions();
+private:
+	Collisions();
 
-		static Collisions* Instance();
+	static Collisions* m_instance;
+	
+public:
+	~Collisions();
 
-		bool Circle(Character* character1, Character* character2);
-		bool Box(Rect2D rect1, Rect2D rect2);
+	static Collisions* Instance();
 
-
-	private: 
-		Collisions();
-
-		static Collisions* m_instance;
+	bool Circle(Character* character1, Character* character2);
+	bool Box(Rect2D rect1, Rect2D rect2);
 };
 
-#endif
