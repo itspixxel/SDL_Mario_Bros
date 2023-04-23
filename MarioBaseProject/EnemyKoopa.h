@@ -10,20 +10,19 @@
 
 class EnemyKoopa : public Enemy
 {
-protected:
-    void ResetFlip() override;
+    public:
+        EnemyKoopa(SDL_Renderer* renderer, std::string imagePath, SoundEffect* stomp_sound, LevelMap* map, Vector2D start_position, Facing start_facing);
+        ~EnemyKoopa();
 
-public:
-    EnemyKoopa(SDL_Renderer* renderer, std::string imagePath, SoundEffect* stomp_sound, LevelMap* map, Vector2D start_position, Facing start_facing);
-    ~EnemyKoopa();
+        void Update(float deltaTime, SDL_Event e) override;
+        void Render() override;
 
-    void Update(float deltaTime, SDL_Event e) override;
-    void Render() override;
-    
-    void DoAIMove() override;
-    void TakeDamage() override;
+        void DoAIMove() override;
+        void TakeDamage() override;
 
-    int GetKillScore() override;
+        int GetKillScore() override;
+
+    protected:
+        void ResetFlip() override;
 };
-
 #endif

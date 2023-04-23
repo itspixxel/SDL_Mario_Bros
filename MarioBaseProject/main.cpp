@@ -32,10 +32,8 @@ int main(int argc, char* args[])
 {
 	if (InitSDL())
 	{
-		// Set up screen manager
 		g_screen_manager = new GameScreenManager(g_renderer, g_audio_manager, &g_session, Screen::INTRO);
 
-		// Set time at start of loop
 		g_old_time = SDL_GetTicks();
 		
 		bool quit = false;
@@ -108,24 +106,30 @@ bool InitSDL()
 
 void CloseSDL()
 {
-	// Release game screen manager
 	delete g_screen_manager;
 	g_screen_manager = nullptr;
 	
-	// Release renderer
 	SDL_DestroyRenderer(g_renderer);
 	g_renderer = nullptr;
 	
-	// Release window
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	
-	// Shut down audio
 	delete g_audio_manager;
 
 	IMG_Quit();
 	TTF_Quit();
 	SDL_Quit();
+}
+
+void Render()
+{
+	SDL_SetRenderDrawColor(g_renderer, 0x00, 0x00, 0x10, 0xFF);
+	SDL_RenderClear(g_renderer);
+
+	g_screen_manager->Render();
+
+	SDL_RenderPresent(g_renderer);
 }
 
 bool Update()
@@ -167,16 +171,4 @@ bool Update()
 	g_old_time = new_time;
 
 	return false;
-}
-
-void Render()
-{
-	SDL_SetRenderDrawColor(g_renderer, 0x00, 0x00, 0x10, 0xFF);
-	SDL_RenderClear(g_renderer);
-
-	// Render screen manager
-	g_screen_manager->Render();
-
-	// Update screen
-	SDL_RenderPresent(g_renderer);
 }

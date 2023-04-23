@@ -79,7 +79,6 @@ bool Character::IsJumping()
 
 void Character::CancelJump(bool force)
 {
-    // If we're still ascending when we collide with something, don't cancel
     if (force || !m_jump_ascending)
     {
         m_remaining_jumps = m_max_jumps;
@@ -90,19 +89,6 @@ void Character::CancelJump(bool force)
 void Character::Render()
 {
     m_sprite->Draw(m_position);
-
-#ifdef DEBUG_DRAW_CHARACTER_BOXES
-    SDL_SetRenderDrawColor(m_renderer, 127, 0, 127, 255);
-    Rect2D collision = GetCollisionBox();
-    SDL_Rect sdlRect = {
-        collision.x,
-        collision.y,
-        collision.width,
-        collision.height
-    };
-
-    SDL_RenderDrawRect(m_renderer, &sdlRect);
-#endif
 }
 
 void Character::Update(float deltaTime, SDL_Event e)
@@ -114,18 +100,16 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 void Character::HandleInput(float deltaTime, SDL_Event e)
 {
+
 }
 
 void Character::UpdateMovement(float deltaTime)
 {
-    // Reset headbutting state
     m_ceiling_headbutt = false;
     
-    // Adjust position according to velocity
     m_position.x += m_velocity.x * deltaTime;
     m_position.y -= m_velocity.y * deltaTime;
 
-    // Apply gravity
     ApplyResistance(deltaTime);
     if (m_velocity.y <= 0)
     {
@@ -144,7 +128,6 @@ void Character::UpdateMovement(float deltaTime)
         CancelJump();
     }
 
-    // Collide with tiles above head
     if (m_velocity.y > 0.0f && m_current_level_map->GetTileAt(tileYHead, tileXCenter) == 1)
     {
         m_velocity.y = -120.0f;
@@ -160,7 +143,6 @@ void Character::UpdateMovement(float deltaTime)
         MoveRight(deltaTime);
     }
 
-    // Check if off left/right of screen and wrap around
     if (collisionBox.x < (float)-(collisionBox.width * 0.5f))
     {
         SetPosition(Vector2D(SCREEN_WIDTH - (0.5 * collisionBox.width), collisionBox.y));

@@ -1,7 +1,7 @@
 ﻿#include "Coin.h"
 
 Coin::Coin(SDL_Renderer* renderer, Vector2D start_position, Vector2D start_force, LevelMap* map) :
-    Character(renderer, "Images/Coin.png", COIN_WIDTH, COIN_HEIGHT, start_position, 0.0f, 0.0f, 0, 18, map),
+    Character(renderer, "Assets/Coin.png", COIN_WIDTH, COIN_HEIGHT, start_position, 0.0f, 0.0f, 0, 18, map),
     m_lifetime(0.0f)
 {
     m_velocity = start_force;
@@ -10,8 +10,8 @@ Coin::Coin(SDL_Renderer* renderer, Vector2D start_position, Vector2D start_force
 
 Coin::~Coin()
 {
-}
 
+}
 
 void Coin::Update(float deltaTime, SDL_Event e)
 {

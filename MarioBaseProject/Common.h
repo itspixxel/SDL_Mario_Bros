@@ -75,5 +75,4 @@ enum class Facing
 	LEFT,
 	RIGHT
 };
-
 #endif

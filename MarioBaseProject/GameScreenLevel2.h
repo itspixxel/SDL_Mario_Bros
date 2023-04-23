@@ -3,18 +3,17 @@
 
 class GameScreenLevel2 : public GameScreenLevelBase
 {
-private:
-    int m_enemy_spawn_side;
-    float m_enemy_spawn_timer;
+    public:
+        GameScreenLevel2(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session);
 
-    bool SetUpLevel() override;
-    void SetUpEntities() override;
+        void Update(float deltaTime, SDL_Event e) override;
 
-    void UpdateSpawners(float deltaTime);
+    private:
+        int m_enemy_spawn_side;
+        float m_enemy_spawn_timer;
 
-public:
-    GameScreenLevel2(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session);
+        bool SetUpLevel() override;
+        void SetUpEntities() override;
 
-    void Update(float deltaTime, SDL_Event e) override;
-    
+        void UpdateSpawners(float deltaTime);
 };

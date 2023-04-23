@@ -12,66 +12,65 @@
 
 class GameScreenLevelBase : public GameScreen
 {
-private:
-	void CheckPlayerEnemyCollision(Player* player, Enemy* enemy);
+    public:
+        bool Setup() override;
+        void Render() override;
 
-protected:
-    const std::string m_bg_image_path;
-    const std::string m_fg_image_path;
-	const std::string m_tile_image_path;
-    const std::string m_bg_music_path;
-    const std::string m_level_map_path;
+    private:
+	    void CheckPlayerEnemyCollision(Player* player, Enemy* enemy);
 
-	GameScreenManager* m_screen_manager;
+    protected:
+        const std::string m_bg_image_path;
+        const std::string m_fg_image_path;
+	    const std::string m_tile_image_path;
+        const std::string m_bg_music_path;
+        const std::string m_level_map_path;
 
-	LevelMap* m_level_map;
-    Texture2D* m_background_texture;
-	Texture2D* m_overlay_texture;
-	Texture2D* m_tiles_spritesheet;
-	AnimatedSprite* m_floor_tile;
+	    GameScreenManager* m_screen_manager;
 
-	Font* m_hud_font;
-	TextBox* m_score_box;
+	    LevelMap* m_level_map;
+        Texture2D* m_background_texture;
+	    Texture2D* m_overlay_texture;
+	    Texture2D* m_tiles_spritesheet;
+	    AnimatedSprite* m_floor_tile;
 
-    SoundEffect* m_coin_sound;
-    SoundEffect* m_kick_sound;
-    SoundEffect* m_mario_jump_sound;
-    SoundEffect* m_luigi_jump_sound;
-    SoundEffect* m_stomp_sound;
+	    Font* m_hud_font;
+	    TextBox* m_score_box;
 
-    PlayerMario* m_character_mario;
-    PlayerLuigi* m_character_luigi;
-    std::vector<Enemy*> m_enemies;
-	std::vector<Coin*> m_coins;
+        SoundEffect* m_coin_sound;
+        SoundEffect* m_kick_sound;
+        SoundEffect* m_mario_jump_sound;
+        SoundEffect* m_luigi_jump_sound;
+        SoundEffect* m_stomp_sound;
 
-    bool m_screen_shaking;
-    float m_shake_time;
-    float m_wobble;
-    float m_background_y_pos;
+        PlayerMario* m_character_mario;
+        PlayerLuigi* m_character_luigi;
+        std::vector<Enemy*> m_enemies;
+	    std::vector<Coin*> m_coins;
 
-	GameScreenLevelBase(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session, std::string bg_image_path, std::string fg_image_path, std::string tile_image_path, std::string bg_music_path, std::string level_map_path);
-    ~GameScreenLevelBase();
+        bool m_screen_shaking;
+        float m_shake_time;
+        float m_wobble;
+        float m_background_y_pos;
+
+	    GameScreenLevelBase(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session, std::string bg_image_path, std::string fg_image_path, std::string tile_image_path, std::string bg_music_path, std::string level_map_path);
+        ~GameScreenLevelBase();
 	
-    virtual bool SetUpLevel();
-    virtual void SetUpEntities() = 0;
+        virtual bool SetUpLevel();
+        virtual void SetUpEntities() = 0;
 	
-    void SetLevelMap();
-    void SetUpSFX();
+        void SetLevelMap();
+        void SetUpSFX();
 
-    void CreateMario(Vector2D position);
-    void CreateLuigi(Vector2D position);
-    void CreateKoopa(Vector2D position, Facing direction, float speed);
-	void CreateCoin(Vector2D position, Vector2D force);
+        void CreateMario(Vector2D position);
+        void CreateLuigi(Vector2D position);
+        void CreateKoopa(Vector2D position, Facing direction, float speed);
+	    void CreateCoin(Vector2D position, Vector2D force);
 	
-	void CheckPlayersAlive();
-    void DoScreenShake();
-    void RenderLevelMapTiles() const;
-    void UpdateEnemies(float deltaTime, SDL_Event e);
-	void UpdateCoins(float deltaTime, SDL_Event e);
-	void UpdateScoreText();
-
-public:
-	bool Setup() override;
-	void Render() override;
+	    void CheckPlayersAlive();
+        void DoScreenShake();
+        void RenderLevelMapTiles() const;
+        void UpdateEnemies(float deltaTime, SDL_Event e);
+	    void UpdateCoins(float deltaTime, SDL_Event e);
+	    void UpdateScoreText();
 };
-

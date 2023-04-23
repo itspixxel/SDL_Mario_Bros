@@ -26,7 +26,7 @@ bool GameScreenGameOver::Setup()
     }
 
     std::stringstream scoreText;
-    scoreText << "Final Score   " << std::setw(8) << std::setfill('0') << m_session->score;
+    scoreText << "Final Score   " << std::setw(4) << std::setfill('0') << m_session->score;
     
     m_text_game_over = new TextBox(m_font, "..............   GAME OVER   ..............", { 256, 110 }, TextColor::WHITE, TextColor::BLACK, true, TextAlignHorizontal::CENTER);
     m_text_score = new TextBox(m_font, scoreText.str(), { 256, 180 }, TextColor::WHITE, TextColor::BLACK, true, TextAlignHorizontal::CENTER);

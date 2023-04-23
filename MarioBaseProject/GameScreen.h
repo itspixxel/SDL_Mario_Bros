@@ -11,20 +11,20 @@
 
 class GameScreen
 {
-protected:
-	SDL_Renderer* m_renderer;
-	AudioManager* m_audio_manager;
-	GameSession* m_session;
-	Mix_Music* m_bgm;
+	public:
+		GameScreen(SDL_Renderer* renderer, AudioManager* audio_manager, GameSession* session);
+		virtual ~GameScreen();
 
-	bool SetBGM(std::string path);
+		virtual bool Setup() = 0;
+		virtual void Render() = 0;
+		virtual void Update(float deltaTime, SDL_Event e);
 
-public:
-	GameScreen(SDL_Renderer* renderer, AudioManager* audio_manager, GameSession* session);
-	virtual ~GameScreen();
+	protected:
+		SDL_Renderer* m_renderer;
+		AudioManager* m_audio_manager;
+		GameSession* m_session;
+		Mix_Music* m_bgm;
 
-	virtual bool Setup() = 0;
-	virtual void Render() = 0;
-	virtual void Update(float deltaTime, SDL_Event e);
+		bool SetBackgroundMusic(std::string path);
 };
 #endif

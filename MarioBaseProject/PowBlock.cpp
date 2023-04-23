@@ -8,7 +8,7 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* level_map)
     m_renderer = renderer;
     m_level_map = level_map;
     
-    std::string imagePath = "Images/PowBlock.png";
+    std::string imagePath = "Assets/PowBlock.png";
     m_texture = new Texture2D(renderer);
     if (!m_texture->LoadFromFile(imagePath.c_str()))
     {
@@ -16,8 +16,8 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* level_map)
         return;
     }
 
-    m_single_sprite_w = m_texture->GetWidth() / 3; // Three sprites in a row
-    m_single_sprite_h = m_texture->GetHeight(); // Single row so sprite height = texture height
+    m_single_sprite_w = m_texture->GetWidth() / 3; // Divide the spritesheet into 3
+    m_single_sprite_h = m_texture->GetHeight(); // Sprite height = texture height
     m_hits_left = 3;
     m_position = Vector2D((SCREEN_WIDTH * 0.5f) - m_single_sprite_w * 0.5f, 260);
 }
@@ -33,7 +33,6 @@ void PowBlock::Render()
 {
     if (m_hits_left <= 0) return;
 
-    // Create the rect to draw from the sprite sheet
     SDL_Rect src_rect = {
         (m_hits_left - 1) * m_single_sprite_w,
         0,
@@ -41,7 +40,6 @@ void PowBlock::Render()
         m_single_sprite_h
     };
 
-    // Create the rect to draw at on the screen
     Rect2D current_rect = GetCollisionBox();
     SDL_Rect dest_rect = {
         current_rect.x,

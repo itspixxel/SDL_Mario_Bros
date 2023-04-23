@@ -175,33 +175,6 @@
     <Library Include="SDL2\SDL\SDL2_ttf.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnimatedSprite.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="Collisions.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyKoopa.cpp" />
-    <ClCompile Include="Font.cpp" />
-    <ClCompile Include="GameScreen.cpp" />
-    <ClCompile Include="GameScreenError.cpp" />
-    <ClCompile Include="GameScreenGameOver.cpp" />
-    <ClCompile Include="GameScreenIntro.cpp" />
-    <ClCompile Include="GameScreenLevel1.cpp" />
-    <ClCompile Include="GameScreenLevel2.cpp" />
-    <ClCompile Include="GameScreenLevelBase.cpp" />
-    <ClCompile Include="GameScreenManager.cpp" />
-    <ClCompile Include="LevelMap.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerLuigi.cpp" />
-    <ClCompile Include="PlayerMario.cpp" />
-    <ClCompile Include="PowBlock.cpp" />
-    <ClCompile Include="SoundEffect.cpp" />
-    <ClCompile Include="TextBox.cpp" />
-    <ClCompile Include="Texture2D.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Character.h" />
@@ -228,6 +201,33 @@
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Texture2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Collisions.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyKoopa.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="GameScreenError.cpp" />
+    <ClCompile Include="GameScreenGameOver.cpp" />
+    <ClCompile Include="GameScreenIntro.cpp" />
+    <ClCompile Include="GameScreenLevel1.cpp" />
+    <ClCompile Include="GameScreenLevel2.cpp" />
+    <ClCompile Include="GameScreenLevelBase.cpp" />
+    <ClCompile Include="GameScreenManager.cpp" />
+    <ClCompile Include="LevelMap.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerLuigi.cpp" />
+    <ClCompile Include="PlayerMario.cpp" />
+    <ClCompile Include="PowBlock.cpp" />
+    <ClCompile Include="SoundEffect.cpp" />
+    <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

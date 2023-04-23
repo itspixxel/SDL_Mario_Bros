@@ -28,7 +28,6 @@ bool GameScreenError::Setup()
     {
         delete m_font;
         m_font = nullptr;
-        // Return true despite error, else we'll get stuck in a loop
         return true;
     }
     

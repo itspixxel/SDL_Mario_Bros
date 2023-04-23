@@ -3,17 +3,14 @@
 #include <fstream>
 #include <iostream>
 
-
 LevelMap::LevelMap(int map[MAP_HEIGHT][MAP_WIDTH])
 {
-    // Allocate arrays
     m_map = new int* [MAP_HEIGHT];
     for (unsigned int i = 0; i < MAP_HEIGHT; i++)
     {
         m_map[i] = new int[MAP_WIDTH];
     }
 
-    // Populate arrays
     for (unsigned int i = 0; i < MAP_HEIGHT; i++)
     {
         for (unsigned int j = 0; j < MAP_WIDTH; j++)
@@ -25,12 +22,10 @@ LevelMap::LevelMap(int map[MAP_HEIGHT][MAP_WIDTH])
 
 LevelMap::~LevelMap()
 {
-    // Delete inner row arrays
     for (unsigned int i = 0; i < MAP_HEIGHT; i++)
     {
         delete[] m_map[i];
     }
-    // Delete outer array
     delete[] m_map;
 }
 

@@ -8,6 +8,7 @@ Player::Player(SDL_Renderer* renderer, const std::string& image_path, int width,
 		m_jump_sound(jump_sound),
         m_game_over(false)
 {
+
 }
 
 void Player::SetAnimationState(PlayerAnimationState state)

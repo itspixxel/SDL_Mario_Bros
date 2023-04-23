@@ -9,17 +9,17 @@
 
 class LevelMap
 {
-private:
-    int** m_map;
+    public:
+        LevelMap(int map[MAP_HEIGHT][MAP_WIDTH]);
+        ~LevelMap();
 
-public:
-    LevelMap(int map[MAP_HEIGHT][MAP_WIDTH]);
-    ~LevelMap();
+        int GetTileAt(unsigned int h, unsigned int w);
+        void ChangeTileAt(unsigned int row, unsigned int column, unsigned int new_value);
 
-    int GetTileAt(unsigned int h, unsigned int w);
-    void ChangeTileAt(unsigned int row, unsigned int column, unsigned int new_value);
+        static LevelMap* LoadFromFile(std::string path);
 
-    static LevelMap* LoadFromFile(std::string path);
+    private:
+        int** m_map;
 };
 
 #endif

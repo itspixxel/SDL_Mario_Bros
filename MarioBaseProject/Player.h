@@ -12,30 +12,30 @@ enum class PlayerAnimationState
 
 class Player : public Character
 {
-private:
-    SoundEffect* m_jump_sound;
-    PlayerAnimationState m_current_animation_state;
-    bool m_game_over;
+    public:
+        Player(SDL_Renderer* renderer, const std::string& image_path, int width, int height, const Vector2D& start_position,
+            float movement_speed, float jump_force, short max_jumps, float collision_radius, LevelMap* map,
+            SoundEffect* jump_sound);
 
-    void SetAnimationState(PlayerAnimationState state);
+        void HandleInput(float deltaTime, SDL_Event e) override;
 
-protected:
-    bool m_jump_held;
+        void Update(float deltaTime, SDL_Event e) override;
+        void Jump() override;
 
-    virtual const SDL_Keycode GetLeftKey() = 0;
-    virtual const SDL_Keycode GetRightKey() = 0;
-    virtual const SDL_Keycode GetJumpKey() = 0;
+        void Kill();
+        bool IsGameOver() const;
 
-public:
-    Player(SDL_Renderer* renderer, const std::string& image_path, int width, int height, const Vector2D& start_position,
-        float movement_speed, float jump_force, short max_jumps, float collision_radius, LevelMap* map,
-        SoundEffect* jump_sound);
+    private:
+        SoundEffect* m_jump_sound;
+        PlayerAnimationState m_current_animation_state;
+        bool m_game_over;
 
-    void HandleInput(float deltaTime, SDL_Event e) override;
+        void SetAnimationState(PlayerAnimationState state);
 
-    void Update(float deltaTime, SDL_Event e) override;
-	void Jump() override;
+    protected:
+        bool m_jump_held;
 
-    void Kill();
-    bool IsGameOver() const;
+        virtual const SDL_Keycode GetLeftKey() = 0;
+        virtual const SDL_Keycode GetRightKey() = 0;
+        virtual const SDL_Keycode GetJumpKey() = 0;
 };

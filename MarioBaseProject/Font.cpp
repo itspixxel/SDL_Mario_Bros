@@ -1,28 +1,4 @@
-﻿/**
- *  This file is part of Fudge, a lightweight wrapper for SDL_ttf. For more info, see https://github.com/mathewdacosta/Fudge.
- *
- *  Copyright (c) 2021 Mathew Dacosta
- * 
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- * 
- *  The above copyright notice and this permission notice shall be included in all
- *  copies or substantial portions of the Software.
- * 
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *  SOFTWARE.
- */
-
-#include "Font.h"
+﻿#include "Font.h"
 
 #include <iostream>
 
@@ -77,7 +53,7 @@ void Font::DrawSolid(std::string text, Vector2D position, SDL_Color color, TextA
 {
     if (m_font == nullptr)
     {
-        std::cout << "Font is not loaded - can't render solid text!" << std::endl;
+        std::cout << "Font is not loaded (solid text)" << std::endl;
         return;
     }
     
@@ -91,7 +67,7 @@ void Font::DrawShaded(std::string text, Vector2D position, SDL_Color fg_color, S
 {
     if (m_font == nullptr)
     {
-        std::cout << "Font is not loaded - can't render shaded text!" << std::endl;
+        std::cout << "Font is not loaded (shaded text)" << std::endl;
         return;
     }
     
@@ -105,7 +81,7 @@ void Font::DrawBlended(std::string text, Vector2D position, SDL_Color color, Tex
 {
     if (m_font == nullptr)
     {
-        std::cout << "Font is not loaded - can't render blended text!" << std::endl;
+        std::cout << "Font is not loaded (blended text)" << std::endl;
         return;
     }
     

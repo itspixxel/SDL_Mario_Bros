@@ -6,28 +6,28 @@
 
 class AudioManager
 {
-private:
-    bool m_initialised;
-    std::vector<Mix_Music*> m_loaded_music;
-    std::vector<Mix_Chunk*> m_loaded_chunks;
+    public:
+        AudioManager();
+        ~AudioManager();
 
-public:
-    AudioManager();
-    ~AudioManager();
-    
-    bool Setup();
-    
-    Mix_Music* LoadMusic(std::string path);
-    void FreeMusic(Mix_Music* music);
-    
-    void PlayMusic(Mix_Music* music, int loops);
-    bool IsMusicPlaying();
-    void StopMusic();
-    
-    Mix_Chunk* LoadSound(std::string path);
-    void FreeSound(Mix_Chunk* music);
+        bool Setup();
 
-    int PlaySound(Mix_Chunk* sound, int loops, int channel = -1, int duration = -1);
-    bool IsChannelPlaying(int channel);
-    void StopChannel(int channel);
+        Mix_Music* LoadMusic(std::string path);
+        void FreeMusic(Mix_Music* music);
+
+        void PlayMusic(Mix_Music* music, int loops);
+        bool IsMusicPlaying();
+        void StopMusic();
+
+        Mix_Chunk* LoadSound(std::string path);
+        void FreeSound(Mix_Chunk* music);
+
+        int PlaySound(Mix_Chunk* sound, int loops, int channel = -1, int duration = -1);
+        bool IsChannelPlaying(int channel);
+        void StopChannel(int channel);
+
+    private:
+        bool m_initialised;
+        std::vector<Mix_Music*> m_loaded_music;
+        std::vector<Mix_Chunk*> m_loaded_chunks;
 };

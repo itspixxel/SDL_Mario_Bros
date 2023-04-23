@@ -7,7 +7,6 @@
 #include "GameScreenGameOver.h"
 #include "GameScreenIntro.h"
 #include "GameScreenLevel1.h"
-#include "GameScreenLevel2.h"
 
 GameScreenManager::GameScreenManager(SDL_Renderer* renderer, AudioManager* audio_manager, GameSession* session, Screen start_screen) :
     m_renderer(renderer),
@@ -49,7 +48,6 @@ void GameScreenManager::Update(float deltaTime, SDL_Event e)
 
 void GameScreenManager::ChangeScreen(Screen new_screen)
 {
-    // Clear up old screen
     if (m_current_screen != nullptr)
     {
         delete m_current_screen;
@@ -62,9 +60,6 @@ void GameScreenManager::ChangeScreen(Screen new_screen)
         break;
     case Screen::LEVEL_1:
         m_current_screen = new GameScreenLevel1(m_renderer, m_audio_manager, this, m_session);
-        break;
-    case Screen::LEVEL_2:
-        m_current_screen = new GameScreenLevel2(m_renderer, m_audio_manager, this, m_session);
         break;
     case Screen::GAME_OVER:
         m_current_screen = new GameScreenGameOver(m_renderer, m_audio_manager, m_session);

@@ -7,8 +7,9 @@
 #include "GameScreenManager.h"
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session) :
-	GameScreenLevelBase(renderer, audio_manager, screen_manager, session, "Images/Level1_BG.png", "Images/Level1_Overlay.png", "Images/Level1_Tiles.png", "Audio/Music/Mario.mp3", "Levels/01.txt")
+	GameScreenLevelBase(renderer, audio_manager, screen_manager, session, "Assets/Level1_BG.png", "Assets/Level1_Overlay.png", "Assets/Level1_Tiles.png", "Audio/Music/Mario.mp3", "Levels/Level1.txt")
 {
+
 }
 
 GameScreenLevel1::~GameScreenLevel1()
@@ -23,10 +24,8 @@ bool GameScreenLevel1::SetUpLevel()
 		return false;
 	}
 
-	// Reset score
 	m_session->score = 0;
 
-	// Set up spawner variables
 	m_enemy_spawn_side = 0;
 	m_enemy_spawn_timer = LEVEL_1_SPAWNER_DELAY;
     

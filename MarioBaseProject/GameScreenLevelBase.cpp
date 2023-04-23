@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <sstream>
 
-
 #include "AnimatedSprite.h"
 #include "Collisions.h"
 #include "Font.h"
@@ -24,13 +23,11 @@ GameScreenLevelBase::GameScreenLevelBase(SDL_Renderer* renderer, AudioManager* a
 	m_wobble(0.0f),
 	m_screen_manager(screen_manager)
 {
-	// Initialise screen shake variables
 	m_screen_shaking = false;
 	m_shake_time = SCREEN_SHAKE_DURATION;
 	m_wobble = 0.0f;
 	m_background_y_pos = 0.0f;
 
-	// Initialise level map to nullptr
 	m_level_map = nullptr;
 }
 
@@ -64,18 +61,15 @@ void GameScreenLevelBase::CheckPlayerEnemyCollision(Player* player, Enemy* enemy
 	{
 		if (enemy->IsInjured())
 		{
-			// Kill enemy when collided
 			enemy->SetAlive(false);
 			m_kick_sound->Play();
 			m_session->score += enemy->GetKillScore();
 		}
 		else
 		{
-			// Kill player
 			player->Kill();
 		}
 	}
-	// Check ceiling headbutt
 	else if (player->IsHeadbuttingCeiling())
 	{
 		Rect2D impactArea = player->GetCollisionBox();
@@ -84,9 +78,7 @@ void GameScreenLevelBase::CheckPlayerEnemyCollision(Player* player, Enemy* enemy
 		{
 			if (!enemy->IsInjured())
 			{
-				// Make enemy take damage
 				enemy->TakeDamage();
-				// Spawn coin
 				Vector2D coinForce = {
 					((rand() % 5) - 2.5f) * 60.0f,
 					280.0f
@@ -104,25 +96,23 @@ bool GameScreenLevelBase::Setup()
 
 void GameScreenLevelBase::Render()
 {
-	// Draw background texture
 	m_background_texture->Render({ 0, m_background_y_pos }, SDL_FLIP_NONE);
 
-	// Draw level map tiles
 	RenderLevelMapTiles();
 
-	// Draw characters
 	m_character_mario->Render();
 	m_character_luigi->Render();
 
-	// Draw enemies
 	for (int i = 0; i < m_enemies.size(); i++)
+	{
 		m_enemies[i]->Render();
+	}
 
-	// Draw coins
 	for (int i = 0; i < m_coins.size(); i++)
+	{
 		m_coins[i]->Render();
+	}
 
-	// Draw overlay
 	m_overlay_texture->Render({ 0, m_background_y_pos }, SDL_FLIP_NONE);
 
 	m_score_box->Draw();
@@ -130,7 +120,6 @@ void GameScreenLevelBase::Render()
 
 bool GameScreenLevelBase::SetUpLevel()
 {
-	// Load background and foreground textures
 	m_background_texture = new Texture2D(m_renderer);
 	if (!m_background_texture->LoadFromFile(m_bg_image_path))
 	{
@@ -154,7 +143,7 @@ bool GameScreenLevelBase::SetUpLevel()
 
 	m_floor_tile = new AnimatedSprite(m_renderer, m_tiles_spritesheet, TILE_WIDTH, TILE_HEIGHT);
 
-	if (!SetBGM(m_bg_music_path))
+	if (!SetBackgroundMusic(m_bg_music_path))
 	{
 		return false;
 	}
@@ -162,36 +151,28 @@ bool GameScreenLevelBase::SetUpLevel()
 	m_hud_font = new Font(m_renderer, "Fonts/Super-Mario-World.ttf", 14);
 	if (!m_hud_font->IsLoaded())
 	{
-		// Already logged - just return
 		return false;
 	}
 
-	// Ensure we have at least 1 player
 	if (m_session->players < 1)
 		m_session->players = 1;
 
-	// Set up score HUD
 	m_score_box = new TextBox(m_hud_font, "SCORE  ", { 20, 400 }, TextColor::WHITE, TextColor::BLACK, true, TextAlignHorizontal::LEFT, TextAlignVertical::CENTER);
 
-	// Set level map
 	SetLevelMap();
 
-	// Load sound effects
 	SetUpSFX();
 
-	// Create characters and POW block
 	SetUpEntities();
 }
 
 void GameScreenLevelBase::SetLevelMap()
 {
-	// Delete old map if still exists
 	if (m_level_map != nullptr)
 	{
 		delete m_level_map;
 	}
 
-	// Set new map
 	m_level_map = LevelMap::LoadFromFile(m_level_map_path);
 }
 
@@ -216,7 +197,7 @@ void GameScreenLevelBase::CreateLuigi(Vector2D position)
 
 void GameScreenLevelBase::CreateKoopa(Vector2D position, Facing direction, float speed)
 {
-	EnemyKoopa* enemy = new EnemyKoopa(m_renderer, "Images/Koopa.png", m_stomp_sound, m_level_map, position, direction);
+	EnemyKoopa* enemy = new EnemyKoopa(m_renderer, "Assets/Koopa.png", m_stomp_sound, m_level_map, position, direction);
 	m_enemies.push_back(enemy);
 }
 
@@ -240,7 +221,6 @@ void GameScreenLevelBase::DoScreenShake()
 	m_shake_time = SCREEN_SHAKE_DURATION;
 	m_wobble = 0.0f;
 
-	// Damage any enemies on screen
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies[i]->TakeDamage();
@@ -268,17 +248,6 @@ void GameScreenLevelBase::RenderLevelMapTiles() const
 				SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
 				break;
 			}
-			
-#ifdef DEBUG_DRAW_TILES
-			SDL_Rect current_rect = {
-				i * TILE_WIDTH,
-                j * TILE_HEIGHT,
-                TILE_WIDTH,
-                TILE_HEIGHT
-            };
-			
-			SDL_RenderDrawRect(m_renderer, &current_rect);
-#endif
 		}
 	}
 }
@@ -290,7 +259,6 @@ void GameScreenLevelBase::UpdateEnemies(float deltaTime, SDL_Event e)
 		return;
 	}
 	
-	// index of enemy to delete at end; -1 signifies none to delete
 	int toDelete = -1;
 	for (unsigned int i = 0; i < m_enemies.size(); i++)
 	{
@@ -301,35 +269,28 @@ void GameScreenLevelBase::UpdateEnemies(float deltaTime, SDL_Event e)
 		float posY = collisionBox.y;
 		float width = collisionBox.width;
 
-		// Check whether enemy is on bottom row of tiles
 		if (posY > 300.0f)
 		{
-			// Check if enemy is off either left or right of screen
 			if (posX < (float)(width * 0.5f) || posX > SCREEN_WIDTH - (float)(width * 0.5f))
 			{
-				// Kill enemy if off screen
 				current->SetAlive(false);
 			}
 		}
 
-		// Check enemy collisions if enemy is not behind pipe
 		if (!((posY > 300.0f || posY <= 64.0f) && (posX <  64.0f || posX > SCREEN_WIDTH - 96.0f)))
 		{
 			CheckPlayerEnemyCollision(m_character_mario, current);
 			CheckPlayerEnemyCollision(m_character_luigi, current);
 		}
 		
-		// Call enemy update method
 		current->Update(deltaTime, e);
 
-		// Check whether enemy is dead and schedule for deletion
 		if (!current->IsAlive())
 		{
 			toDelete = i;
 		}
 	}
 
-	// Remove enemy if scheduled (will be last if multiple are dead)
 	if (toDelete >= 0)
 	{
 		Enemy* temp = m_enemies[toDelete];
@@ -355,10 +316,8 @@ void GameScreenLevelBase::UpdateCoins(float deltaTime, SDL_Event e)
 		{
 			if (Collisions::Instance()->Circle(m_coins[i], m_character_mario) || Collisions::Instance()->Circle(m_coins[i], m_character_luigi))
 			{
-				// Delete coin
 				current->SetAlive(false);
 
-				// Increment score and play sound
 				m_coin_sound->Play();
 				m_session->score += COIN_COLLECT_SCORE;
 			}
@@ -370,7 +329,6 @@ void GameScreenLevelBase::UpdateCoins(float deltaTime, SDL_Event e)
 		}
 		else
 		{
-			// Queue for deletion
 			toDelete = i;
 		}
 	}

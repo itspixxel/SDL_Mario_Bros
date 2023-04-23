@@ -23,7 +23,6 @@ AnimatedSprite::AnimatedSprite(SDL_Renderer* renderer, std::string spritesheet_p
     }
 }
 
-
 AnimatedSprite::AnimatedSprite(SDL_Renderer* renderer, Texture2D* spritesheet, int width, int height) :
     m_renderer(renderer),
     m_spritesheet(spritesheet),
@@ -38,6 +37,7 @@ AnimatedSprite::AnimatedSprite(SDL_Renderer* renderer, Texture2D* spritesheet, i
     m_animation_time_elapsed(0.0f),
     m_flip(SDL_FLIP_NONE)
 {
+
 }
 
 AnimatedSprite::~AnimatedSprite()
@@ -103,6 +103,5 @@ void AnimatedSprite::Draw(const Vector2D& position)
         m_single_frame_width,
         m_single_frame_height
     };
-    
     m_spritesheet->Render(spriteSource, spriteDest, m_flip);
 }

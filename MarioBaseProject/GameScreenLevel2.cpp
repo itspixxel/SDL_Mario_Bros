@@ -1,8 +1,9 @@
 ﻿#include "GameScreenLevel2.h"
 
 GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session) :
-    GameScreenLevelBase(renderer, audio_manager, screen_manager, session, "Images/Level2_BG.png", "Images/Level2_Overlay.png", "Images/Level2_Tiles.png", "Audio/Music/MarioUnderworld.mp3", "Levels/02.txt")
+    GameScreenLevelBase(renderer, audio_manager, screen_manager, session, "Assets/Level2_BG.png", "Assets/Level2_Overlay.png", "Assets/Level2_Tiles.png", "Audio/Music/MarioUnderworld.mp3", "Levels/Level2.txt")
 {
+
 }
 
 bool GameScreenLevel2::SetUpLevel()
@@ -12,10 +13,8 @@ bool GameScreenLevel2::SetUpLevel()
         return false;
     }
 
-    // Reset score
     m_session->score = 0;
 
-    // Set up spawner variables
     m_enemy_spawn_side = 0;
     m_enemy_spawn_timer = LEVEL_2_SPAWNER_DELAY;
     

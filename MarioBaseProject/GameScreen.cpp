@@ -8,6 +8,7 @@ GameScreen::GameScreen(SDL_Renderer* renderer, AudioManager* audio_manager, Game
     m_session(session),
     m_bgm(nullptr)
 {
+
 }
 
 GameScreen::~GameScreen()
@@ -19,8 +20,7 @@ GameScreen::~GameScreen()
     m_renderer = nullptr;
 }
 
-
-bool GameScreen::SetBGM(std::string path)
+bool GameScreen::SetBackgroundMusic(std::string path)
 {
     if (m_audio_manager->IsMusicPlaying())
     {

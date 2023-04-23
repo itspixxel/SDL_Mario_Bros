@@ -1,6 +1,5 @@
 ﻿#include "EnemyKoopa.h"
 
-
 #include "Common.h"
 #include "Texture2D.h"
 
@@ -22,17 +21,7 @@ void EnemyKoopa::Update(float deltaTime, SDL_Event e)
 
 void EnemyKoopa::Render()
 {
-    Character::Render();    
-
-#ifdef DEBUG_DRAW_ENEMY_BASE
-    Rect2D collision = GetCollisionBox();
-    int posXCenter = (int)(collision.x + (collision.width * 0.5));
-    int posYFoot = (int)(collision.y + (collision.height));
-    SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, 255);
-    if (posYFoot > 300)
-        SDL_SetRenderDrawColor(m_renderer, 255, 255, 0, 255);
-    SDL_RenderDrawLine(m_renderer, posXCenter, posYFoot, posXCenter, posYFoot + 10);
-#endif
+    Character::Render();
 }
 
 void EnemyKoopa::ResetFlip()
@@ -43,7 +32,6 @@ void EnemyKoopa::ResetFlip()
 
 void EnemyKoopa::DoAIMove()
 {
-    // Move according to facing direction, never turn around
     if (m_facing_direction == Facing::LEFT)
     {
         m_moving_left = true;
