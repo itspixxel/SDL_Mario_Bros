@@ -51,7 +51,6 @@ void Character::MoveRight(float deltaTime)
     m_position.x += deltaTime * m_movement_speed;
 }
 
-
 void Character::ApplyResistance(float deltaTime)
 {
     const float deltaResistanceX = (RESISTANCE * deltaTime);
