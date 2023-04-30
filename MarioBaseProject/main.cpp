@@ -141,29 +141,26 @@ bool Update()
 
 	switch (e.type)
 	{
-	case SDL_QUIT:
-		return true;
-		break;
-	case SDL_KEYUP:
+		case SDL_QUIT:
+			return true;
+			break;
+		case SDL_KEYUP:
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_ESCAPE:
-			return true;
-		case SDLK_SLASH:
-			g_screen_manager->ChangeScreen(Screen::INTRO);
-			break;
-		case SDLK_COMMA:
-			g_screen_manager->ChangeScreen(Screen::LEVEL_1);
-			break;
-		case SDLK_PERIOD:
-			g_screen_manager->ChangeScreen(Screen::LEVEL_2);
-			break;
-		case SDLK_HASH:
-			g_screen_manager->ChangeScreen(Screen::GAME_OVER);
-			break;
-		case SDLK_QUOTE:
-			g_screen_manager->ChangeScreen(Screen::ERROR);
-			break;
+			case SDLK_ESCAPE:
+				return true;
+			case SDLK_HOME:
+				g_screen_manager->ChangeScreen(Screen::INTRO);
+				break;
+			case SDLK_1:
+				g_screen_manager->ChangeScreen(Screen::LEVEL_1);
+				break;
+			case SDLK_2:
+				g_screen_manager->ChangeScreen(Screen::LEVEL_2);
+				break;
+			case SDLK_END:
+				g_screen_manager->ChangeScreen(Screen::GAME_OVER);
+				break;
 		}
 	}
 
