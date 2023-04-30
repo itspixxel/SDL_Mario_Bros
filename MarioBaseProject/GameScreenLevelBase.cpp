@@ -237,16 +237,16 @@ void GameScreenLevelBase::RenderLevelMapTiles() const
 			
 			switch (m_level_map->GetTileAt(j, i))
 			{
-			case 0:
-				SDL_SetRenderDrawColor(m_renderer, 0, 0, 255, 255);
-				break;
-			case 1:
-				m_floor_tile->Draw(tilePos);
-				SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
-				break;
-			default:
-				SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-				break;
+				case 0:
+					SDL_SetRenderDrawColor(m_renderer, 0, 0, 255, 255);
+					break;
+				case 1:
+					m_floor_tile->Draw(tilePos);
+					SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
+					break;
+				default:
+					SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+					break;
 			}
 		}
 	}

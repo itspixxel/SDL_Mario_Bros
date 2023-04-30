@@ -63,20 +63,20 @@ void GameScreenIntro::Update(float deltaTime, SDL_Event e)
 {
     switch (e.type)
     {
-    case SDL_MOUSEBUTTONDOWN:
-        switch (e.button.button)
-        {
-        case SDL_BUTTON_LEFT:
-            if (CheckTextBoxHover(m_text_2p))
+        case SDL_MOUSEBUTTONDOWN:
+            switch (e.button.button)
             {
-                m_session->players = 2;
-                m_screen_manager->QueueScreen(Screen::LEVEL_1);
-            }
-            /*else if (CheckTextBoxHover(m_text_high_scores))
-            {
-                m_screen_manager->QueueScreen(Screen::HIGH_SCORES);
-            }*/
-            break;
+                case SDL_BUTTON_LEFT:
+                    if (CheckTextBoxHover(m_text_2p))
+                    {
+                        m_session->players = 2;
+                        m_screen_manager->QueueScreen(Screen::LEVEL_1);
+                    }
+                    /*else if (CheckTextBoxHover(m_text_high_scores))
+                    {
+                        m_screen_manager->QueueScreen(Screen::HIGH_SCORES);
+                    }*/
+                    break;
         }
     }
 

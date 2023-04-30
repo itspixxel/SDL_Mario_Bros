@@ -18,19 +18,19 @@ void Player::SetAnimationState(PlayerAnimationState state)
         m_current_animation_state = state;
         switch (state)
         {
-        case PlayerAnimationState::JUMPING:
-            m_sprite->SetAnimation(0, 42, 1.0f, 1);
-            break;
-        case PlayerAnimationState::WALKING:
-            m_sprite->SetAnimation(0, 0, 0.08f, 4);
-            break;
-        case PlayerAnimationState::DYING:
-            m_sprite->SetAnimation(96, 42, 1.0f, 1);
-            break;
-        case PlayerAnimationState::STATIONARY:
-        default:
-            m_sprite->SetAnimation(0, 0, 1.0f, 1);
-            break;
+            case PlayerAnimationState::JUMPING:
+                m_sprite->SetAnimation(0, 42, 1.0f, 1);
+                break;
+            case PlayerAnimationState::WALKING:
+                m_sprite->SetAnimation(0, 0, 0.08f, 4);
+                break;
+            case PlayerAnimationState::DYING:
+                m_sprite->SetAnimation(96, 42, 1.0f, 1);
+                break;
+            case PlayerAnimationState::STATIONARY:
+            default:
+                m_sprite->SetAnimation(0, 0, 1.0f, 1);
+                break;
         }
     }
 }
@@ -47,38 +47,39 @@ void Player::HandleInput(float deltaTime, SDL_Event e)
     
     switch (e.type)
     {
-    case SDL_KEYDOWN:
-        if (e.key.keysym.sym == GetLeftKey())
-        {
-            m_moving_left = true;
-        }
-        else if (e.key.keysym.sym == GetRightKey())
-        {
-            m_moving_right = true;
-        }
-        else if (e.key.keysym.sym == GetJumpKey())
-        {
-            if (CanJump() && !m_jump_held)
+        case SDL_KEYDOWN:
+            if (e.key.keysym.sym == GetLeftKey())
             {
-                m_jump_held = true;
-                Jump();
+                m_moving_left = true;
             }
-        }
-        break;
-    case SDL_KEYUP:
-        if (e.key.keysym.sym == GetLeftKey())
-        {
-            m_moving_left = false;
-        }
-        else if (e.key.keysym.sym == GetRightKey())
-        {
-            m_moving_right = false;
-        }
-        else if (e.key.keysym.sym == GetJumpKey())
-        {
-            m_jump_held = false;
-        }
-        break;
+            else if (e.key.keysym.sym == GetRightKey())
+            {
+                m_moving_right = true;
+            }
+            else if (e.key.keysym.sym == GetJumpKey())
+            {
+                if (CanJump() && !m_jump_held)
+                {
+                    m_jump_held = true;
+                    Jump();
+                }
+            }
+            break;
+
+        case SDL_KEYUP:
+            if (e.key.keysym.sym == GetLeftKey())
+            {
+                m_moving_left = false;
+            }
+            else if (e.key.keysym.sym == GetRightKey())
+            {
+                m_moving_right = false;
+            }
+            else if (e.key.keysym.sym == GetJumpKey())
+            {
+                m_jump_held = false;
+            }
+            break;
     }
 }
 
