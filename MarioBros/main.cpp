@@ -66,7 +66,7 @@ bool InitSDL()
 		return false;
 	}
 
-	g_window = SDL_CreateWindow("GEC Mario",
+	g_window = SDL_CreateWindow("Mario Bros.",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH,

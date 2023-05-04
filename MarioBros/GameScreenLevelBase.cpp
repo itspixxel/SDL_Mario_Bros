@@ -86,6 +86,7 @@ void GameScreenLevelBase::CheckPlayerEnemyCollision(Player* player, Enemy* enemy
 				CreateCoin(enemy->GetPosition(), coinForce);
 			}
 		}
+		DoScreenShake();
 	}
 }
 
@@ -220,11 +221,6 @@ void GameScreenLevelBase::DoScreenShake()
 	m_screen_shaking = true;
 	m_shake_time = SCREEN_SHAKE_DURATION;
 	m_wobble = 0.0f;
-
-	for (int i = 0; i < m_enemies.size(); i++)
-	{
-		m_enemies[i]->TakeDamage();
-	}
 }
 
 void GameScreenLevelBase::RenderLevelMapTiles() const

@@ -92,6 +92,11 @@ void GameScreenLevel1::CheckPOWBlockCollisions(Character* character)
         DoScreenShake();
         m_pow_block->TakeHit();
         character->CancelJump(true);
+
+		for (int i = 0; i < m_enemies.size(); i++)
+		{
+			m_enemies[i]->TakeDamage();
+		}
     }
 }
 
