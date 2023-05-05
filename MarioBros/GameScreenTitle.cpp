@@ -1,11 +1,11 @@
-﻿#include "GameScreenIntro.h"
+﻿#include "GameScreenTitle.h"
 
 #include <iostream>
 #include <sstream>
 
 #include "TextBox.h"
 
-GameScreenIntro::GameScreenIntro(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session) :
+GameScreenTitle::GameScreenTitle(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session) :
     GameScreen(renderer, audio_manager, session),
     m_screen_manager(screen_manager),
     m_background_texture(nullptr),
@@ -19,13 +19,13 @@ GameScreenIntro::GameScreenIntro(SDL_Renderer* renderer, AudioManager* audio_man
 
 }
 
-GameScreenIntro::~GameScreenIntro()
+GameScreenTitle::~GameScreenTitle()
 {
     delete m_background_texture;
     delete m_hud_font;
 }
 
-bool GameScreenIntro::Setup()
+bool GameScreenTitle::Setup()
 {
     m_background_texture = new Texture2D(m_renderer);
     if (!m_background_texture->LoadFromFile("Assets/Title_BG.png"))
@@ -34,7 +34,7 @@ bool GameScreenIntro::Setup()
         return false;
     }
 
-    if (!SetBackgroundMusic("Audio/Music/MarioUnderworld.mp3"))
+    if (!SetBackgroundMusic("Audio/Music/MarioIntroTheme.mp3"))
     {
         return false;
     }
@@ -45,21 +45,19 @@ bool GameScreenIntro::Setup()
         return false;
     }
 
-    m_text_2p = new TextBox(m_hud_font, "..... START  (2p) .....", { 256, 270 + 15 }, TextColor::BLACK, TextColor::WHITE, false, TextAlignHorizontal::CENTER);
-    //m_text_high_scores = new TextBox(m_hud_font, ".... HIGH SCORES ....", { 256, 300 }, TextColor::WHITE, TextColor::BLACK, false, TextAlignHorizontal::CENTER);
+    m_text_2p = new TextBox(m_hud_font, "..... START  (2p) .....", { 256, 285 }, TextColor::BLACK, TextColor::WHITE, false, TextAlignHorizontal::CENTER);
     
     return true;
 }
 
-void GameScreenIntro::Render()
+void GameScreenTitle::Render()
 {
     m_background_texture->Render(Vector2D(), SDL_FLIP_NONE);
 
     m_text_2p->Draw();
-    //m_text_high_scores->Draw();
 }
 
-void GameScreenIntro::Update(float deltaTime, SDL_Event e)
+void GameScreenTitle::Update(float deltaTime, SDL_Event e)
 {
     switch (e.type)
     {
@@ -72,10 +70,6 @@ void GameScreenIntro::Update(float deltaTime, SDL_Event e)
                         m_session->players = 2;
                         m_screen_manager->QueueScreen(Screen::LEVEL_1);
                     }
-                    /*else if (CheckTextBoxHover(m_text_high_scores))
-                    {
-                        m_screen_manager->QueueScreen(Screen::HIGH_SCORES);
-                    }*/
                     break;
         }
     }
@@ -83,11 +77,10 @@ void GameScreenIntro::Update(float deltaTime, SDL_Event e)
     SDL_GetMouseState(&m_mouse_x, &m_mouse_y);
 
     m_text_2p->SetDrawBg(CheckTextBoxHover(m_text_2p));
-    //m_text_high_scores->SetDrawBg(CheckTextBoxHover(m_text_high_scores));
 }
 
 
-bool GameScreenIntro::CheckTextBoxHover(TextBox* text_box) const
+bool GameScreenTitle::CheckTextBoxHover(TextBox* text_box) const
 {
     SDL_Rect bounds = text_box->GetBoundingBox();
 

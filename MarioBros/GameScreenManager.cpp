@@ -5,7 +5,7 @@
 #include "GameScreen.h"
 #include "GameScreenError.h"
 #include "GameScreenGameOver.h"
-#include "GameScreenIntro.h"
+#include "GameScreenTitle.h"
 #include "GameScreenLevel1.h"
 #include "GameScreenLevel2.h"
 
@@ -57,7 +57,7 @@ void GameScreenManager::ChangeScreen(Screen new_screen)
     switch (new_screen)
     {
             case Screen::INTRO:
-                m_current_screen = new GameScreenIntro(m_renderer, m_audio_manager, this, m_session);
+                m_current_screen = new GameScreenTitle(m_renderer, m_audio_manager, this, m_session);
                 break;
             case Screen::LEVEL_1:
                 m_current_screen = new GameScreenLevel1(m_renderer, m_audio_manager, this, m_session);

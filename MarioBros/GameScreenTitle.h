@@ -7,14 +7,14 @@
 #include "TextBox.h"
 #include "Texture2D.h"
 
-#ifndef _GAMESCREENINTRO_H
-#define _GAMESCREENINTRO_H
+#ifndef _GameScreenTitle_H
+#define _GameScreenTitle_H
 
-class GameScreenIntro : public GameScreen
+class GameScreenTitle : public GameScreen
 {
     public:
-        GameScreenIntro(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session);
-        ~GameScreenIntro();
+        GameScreenTitle(SDL_Renderer* renderer, AudioManager* audio_manager, GameScreenManager* screen_manager, GameSession* session);
+        ~GameScreenTitle();
 
         bool Setup() override;
 

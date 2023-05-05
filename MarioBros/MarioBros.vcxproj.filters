@@ -34,7 +34,7 @@
     <ClCompile Include="GameScreenGameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameScreenIntro.cpp">
+    <ClCompile Include="GameScreenTitle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameScreenLevel1.cpp">
@@ -117,7 +117,7 @@
     <ClInclude Include="GameScreenGameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameScreenIntro.h">
+    <ClInclude Include="GameScreenTitle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameScreenLevel1.h">
