@@ -36,7 +36,7 @@ void Character::Jump()
 {
     m_velocity.y = m_jump_force;
     m_jump_ascending = true;
-    m_remaining_jumps -= 1;
+    --m_remaining_jumps;
 }
 
 void Character::MoveLeft(float deltaTime)
@@ -120,10 +120,8 @@ void Character::UpdateMovement(float deltaTime)
     int tileYHead = (int)(collisionBox.y) / TILE_HEIGHT;
     int tileYFoot = (int)(collisionBox.y + collisionBox.height) / TILE_HEIGHT;
 
-    // Stop falling
     if (!m_current_level_map->GetTileAt(tileYFoot, tileXCenter) == 0 && m_alive)
     {
-        // Cancel jump
         CancelJump();
     }
 

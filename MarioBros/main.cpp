@@ -161,6 +161,9 @@ bool Update()
 				case SDLK_END:
 					g_screen_manager->ChangeScreen(Screen::GAME_OVER);
 					break;
+				case SDLK_BACKQUOTE:
+					g_screen_manager->ChangeScreen(Screen::ERROR);
+					break;
 		}
 	}
 

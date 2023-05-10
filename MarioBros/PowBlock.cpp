@@ -53,7 +53,7 @@ void PowBlock::Render()
 
 void PowBlock::TakeHit()
 {
-    m_hits_left -= 1;
+    --m_hits_left;
     if (m_hits_left <= 0)
     {
         m_hits_left = 0;
